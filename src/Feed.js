@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react';
 import CreateIcon from '@mui/icons-material/Create';
 import './Feed.css'
 import ImageIcon from '@mui/icons-material/Image';
@@ -6,16 +6,50 @@ import InputOption from "./InputOption";
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import CalendarViewDayIcon from '@mui/icons-material/CalendarViewDay';
+import Post from './Post';
+import { db } from "./firebase";
+import firebase from 'firebase/compat/app';
+
 
 export default function Feed() {
+    const [input, setInput] =useState('');
+    const [posts, setPosts]=useState([]);
+
+    useEffect(()=>{
+        db.collection("posts").orderBy("timestamp","desc").onSnapshot(snapshot=>(/*this orders the posts*/ 
+            setPosts(snapshot.docs.map(doc =>(
+                {
+                    id: doc.id,
+                    data: doc.data(),
+                }
+            )))
+        ))
+    },[])
+
+    const sendPost = e =>{/*event*/
+        e.preventDefault();/*this makes it so when you click enter after typing something it does not automatically reset*/
+        db.collection('posts').add({
+            name:"Derek",
+            description:"testing the code",
+            message:input,
+            photoLink:"",
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+
+
+        });
+        setInput("");
+    }; 
+
+
   return (
     <div className="feed">
         <div className="feed_inputContainer">
             <div className= "feed_input">
                 <CreateIcon/>
                 <form>
-                    <input type="text"/>
-                    <button type="submit">Send</button>
+                    <input value={input} onChange={e=>setInput(e.target.value)} type="text"/>     {/*This handles what you type in*/}
+                    <button onClick={sendPost} type="submit">Send
+                    </button>
 
                 </form>
             </div>
@@ -35,8 +69,17 @@ export default function Feed() {
 
                 </div>
         </div>
-        
+        {posts.map(({id, data:{name, description, message, photoLink}})=>(
 
+            <Post
+            key={id}
+            name={name}
+            description={description}
+            message={message}
+            photoLink={photoLink}
+            
+        />))}
+        
     </div>
   )
 }
