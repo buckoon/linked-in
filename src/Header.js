@@ -7,8 +7,17 @@ import SearchIcon from '@mui/icons-material/Search';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import { auth } from './firebase';
+import { useDispatch } from 'react-redux';
+
+import { logout } from './features/userSlice';
 
 function Header() {
+  const dispatch =useDispatch();
+  const logoutOfApp = () =>{
+    dispatch(logout())
+    auth.signOut();
+  };
   return (
 
     <div className="header">
@@ -19,7 +28,8 @@ function Header() {
 
          <div className="header_search">
             <SearchIcon/>
-            <input type="text"/>
+           
+            <input placeholder="Search" type="text"/>
          </div>
          
       </div>
@@ -47,7 +57,10 @@ function Header() {
 
  <HeaderOption 
         avatar="https://media.istockphoto.com/id/1362881287/vector/portrait-of-george-washington.jpg?s=612x612&w=0&k=20&c=66-WVuC7CjImDxrR6LphJkUG7ircWd3l69jypyf5o5E="
-        title="User" />       
+        title="User"   
+        onClick={logoutOfApp}
+        /> 
+        
         
                
 

@@ -17,7 +17,7 @@ export default function Feed() {
 
     useEffect(()=>{
         db.collection("posts").orderBy("timestamp","desc").onSnapshot(snapshot=>(/*this orders the posts*/ 
-            setPosts(snapshot.docs.map(doc =>(
+            setPosts(snapshot.docs.map(doc =>(  /* lines 18-27:This is a real-time listiner to firebase. This is mapped to the "posts" state so when new data is pushed to the data base it will update the posts state*/ 
                 {
                     id: doc.id,
                     data: doc.data(),
@@ -26,9 +26,12 @@ export default function Feed() {
         ))
     },[])
 
-    const sendPost = e =>{/*event*/
-        e.preventDefault();/*this makes it so when you click enter after typing something it does not automatically reset*/
-        db.collection('posts').add({
+
+    const sendPost = e =>{          /*Lines 29-43 is pushing data to the database*/
+        e.preventDefault();     /*this makes it so when you click enter after typing something it does not automatically reset*/
+        
+        
+        db.collection('posts').add({    /* we are pushing to the posts we are actually listening to (see "posts" in line 19*/
             name:"Derek",
             description:"testing the code",
             message:input,
