@@ -9,15 +9,18 @@ import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
-
 import { logout } from './features/userSlice';
 
+
+
 function Header() {
+  /*const user = useSelector(selectUser);*/
   const dispatch =useDispatch();
   const logoutOfApp = () =>{
     dispatch(logout())
     auth.signOut();
   };
+
   return (
 
     <div className="header">
@@ -56,7 +59,7 @@ function Header() {
         title="Notifications" />
 
  <HeaderOption 
-        avatar="https://media.istockphoto.com/id/1362881287/vector/portrait-of-george-washington.jpg?s=612x612&w=0&k=20&c=66-WVuC7CjImDxrR6LphJkUG7ircWd3l69jypyf5o5E="
+        avatar={true}
         title="User"   
         onClick={logoutOfApp}
         /> 

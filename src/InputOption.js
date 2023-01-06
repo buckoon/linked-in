@@ -1,7 +1,7 @@
 import React from 'react'
 import "./InputOption.css"
 
-function InputOption({Icon, title, color}) {
+function InputOption({Icon, title, color}) {/* These are your destructured props*/
   return (
     <div className="inputOption">
         <Icon style={{color:color}}/>

@@ -10,7 +10,7 @@ const [email, setEmail]=useState("");
 const [password, setPassword]=useState("");
 const [name, setName]=useState("");
 const [profpic,setProfpic]=useState("");
-const dispatch =useDispatch();/*useDispatch is a new hook that dispatches an action into the store*/ 
+const dispatch =useDispatch();/*useDispatch is a new hook that dispatches an action into the store. You will always need useDispatch if you want to use dispatch*/ 
 
 
     const loginToApp = (e) =>{
@@ -31,19 +31,21 @@ const dispatch =useDispatch();/*useDispatch is a new hook that dispatches an act
         if (!name)
         {return alert ("please enter a name");}
 
-        auth.createUserWithEmailAndPassword(email, password) /*creates a user on the back end*/ 
+
+        /*Firebase stuff*/ 
+        auth.createUserWithEmailAndPassword(email, password) /*uses firebase to create a user on the back end*/ 
         .then((userAuth) => {     /* .then((userAuth) => means if create a user is successful it will update their profile*/ 
             userAuth.user.updateProfile({
                 displayName:name, /*displayName  and photoURL are fire base keys and should not be changed but name and profpic are local variables */
                 photURL:profpic,
             })
             .then(() => {
-                dispatch(
+                dispatch(        /*dispatch is a function that sends an action to th store to update the state*/ 
                     login({
-                        email: userAuth.user.email,
-                    uid: userAuth.user.uid,
-                    displayName: name,
-                    photoUrl:profpic
+                        email: userAuth.user.email, /*all of this comes from firebase and is used to update the redux store*/ 
+                        uid: userAuth.user.uid,
+                        displayName: name,
+                        photoUrl:profpic
                     })
                 )
 

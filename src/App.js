@@ -7,6 +7,7 @@ import Login from "./Login";
 import { useDispatch } from 'react-redux';
 import { auth } from './firebase';
 import { login, logout } from './features/userSlice';
+import Gadgets from "./Gadgets";
 
 import './App.css';
 import Header from './Header';
@@ -43,6 +44,8 @@ function App() {
         
             < Sidebar/>
             <Feed/>
+            <Gadgets/>
+         
     
           </div>
         )

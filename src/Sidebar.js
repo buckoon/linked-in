@@ -1,7 +1,13 @@
 import React from 'react'
 import "./Sidebar.css"
 import { Avatar} from '@mui/material';
+import { useSelector } from 'react-redux';
+import {selectUser } from "./features/userSlice";
+
+
 function Sidebar() {
+
+        const user = useSelector(selectUser);
 
     const recentItem = (topic) =>(
         <div className="sidebar_recentItem">
@@ -21,9 +27,9 @@ function Sidebar() {
         <div className= "sidebar_top">
             <img src={"https://img.rawpixel.com/private/static/images/website/2022-05/sk9791-image-kwvuja96.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=13500e5125cd13300ba36ed88517f83e"}
             alt=""/>
-        <Avatar className= 'sidebar_avatar' src={"https://media.istockphoto.com/id/1362881287/vector/portrait-of-george-washington.jpg?s=612x612&w=0&k=20&c=66-WVuC7CjImDxrR6LphJkUG7ircWd3l69jypyf5o5E="} />
-            <h2>Jack Frost</h2>
-            <h4>JackFrost@gmail.com</h4>
+        <Avatar className= 'sidebar_avatar' src={user.photoUrl} />
+            <h2>{user.displayName}</h2>
+            <h4>{user.email}</h4>
         </div>
 
     
@@ -44,7 +50,7 @@ function Sidebar() {
                 <p>Recent</p>
                 {recentItem('reactjs')}
                 {recentItem('Design')}
-                {recentItem('dude')}
+                {recentItem('Engineering')}
             </div>
     </div>
   )

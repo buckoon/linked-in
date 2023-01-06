@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {forwardRef} from 'react';
 import "./Post.css"
 import { Avatar} from '@mui/material';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
@@ -7,11 +7,12 @@ import ChatIcon from '@mui/icons-material/Chat';
 import ShareIcon from '@mui/icons-material/Share';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 
-function Post({name, description, message,photoLink}) {/*These are your destructured props*/
+const Post = forwardRef(({name, description, message,photoLink}, ref) =>  /*These are your destructured props*/
+{     
   return (
-    <div className="post">
+    <div ref={ref} className="post">
         <div className="post_header">
-        <Avatar className= 'post_avatar' src={photoLink} />
+        <Avatar className= {photoLink}> {name[0]}</Avatar>
         <div className= "post_info">
             <h2>{name}</h2>
             <p>{description}</p>
@@ -38,6 +39,6 @@ function Post({name, description, message,photoLink}) {/*These are your destruct
         </div>
     </div>
   )
-}
+})
 
 export default Post
